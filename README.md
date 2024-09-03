@@ -69,10 +69,18 @@ Seems to make no big difference, [this](https://arxiv.org/pdf/1611.01462) sugges
 
 ### [dec_model.py](dec_model.py) vs. [dec_split_model.py](dec_split_model.py)
 
+dec_model.py uses a standard autoregressive Transformer decoder (like GPT), 
+whereas dec_split_model.py splits an embeddings information maintenance and prediction role into two separate embeddings.
+
 #### General
+
+In general the two models perform similarly.
 
 ![Different-architecture-(bf=5).png](imgs/Different-architecture-(bf=5).png)
 
 #### Interleaving
+
+A standard autoregressive Transformer decoder has an additional previous token bias, which slows learning when two independent trees are interleaved.
+Showing on a artificial task that the previous token bias can hurt training speed.
 
 ![Interleaving-two-x4_b2_d7-trees.png](imgs/Interleaving-two-x4_b2_d7-trees.png)
