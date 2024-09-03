@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from experiments.tree.tree_structure import SampleGen
+from tree_structure import SampleGen
 
 
 @dataclass

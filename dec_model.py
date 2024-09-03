@@ -4,8 +4,8 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-from experiments.tree.experiment_config import ModelConfig
-from experiments.tree.positional_encoding import GlobalSinusoidalPositionalEncoding
+from experiment_config import ModelConfig
+from positional_encoding import GlobalSinusoidalPositionalEncoding
 
 
 def init_weights(model):

@@ -366,6 +366,7 @@ class XSampleGen(SampleGen):
     def number_of_input_permutations(self) -> int:
         return -1
 
+    @property
     def best_possible_loss(self) -> float:
         return -1
 

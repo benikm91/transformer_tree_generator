@@ -6,10 +6,10 @@ import torch
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data.dataloader import DataLoader
 
-from experiments.tree.dec_model import Decoder
-from experiments.tree.dec_split_model import DecoderSplit
-from experiments.tree.experiment_config import ExperimentConfig, ModelConfig
-from experiments.tree.tree_structure import FixSequenceSampleGen, SampleNodesWithoutReplacementGen, DatasetBosEos, \
+from dec_model import Decoder
+from dec_split_model import DecoderSplit
+from experiment_config import ExperimentConfig, ModelConfig
+from tree_structure import FixSequenceSampleGen, SampleNodesWithoutReplacementGen, DatasetBosEos, \
     SampleLeavesWithReplacementGen, SampleLeavesWithoutReplacementGen, SampleNodesWithReplacementGen, XSampleGen, \
     InterleaveSampleGen
 
@@ -22,7 +22,7 @@ WARMUP_STEPS = 8000
 BF = 5; D = 3
 base_experiment_config = ExperimentConfig(
     model_config=ModelConfig(
-        model='decoder-split',
+        model='decoder',
         n_layer=3,
         n_head=8,
         n_embd=512,
@@ -37,11 +37,12 @@ base_experiment_config = ExperimentConfig(
 )
 
 for experiment in [
-    dataclasses.replace(base_experiment_config, sample_gen=FixSequenceSampleGen(branch_factor=BF, depth=D)),
-    dataclasses.replace(base_experiment_config, sample_gen=SampleLeavesWithReplacementGen(branch_factor=BF, depth=D)),
-    dataclasses.replace(base_experiment_config, sample_gen=SampleNodesWithReplacementGen(branch_factor=BF, depth=D)),
-    dataclasses.replace(base_experiment_config, sample_gen=SampleLeavesWithoutReplacementGen(branch_factor=BF, depth=D)),
-    dataclasses.replace(base_experiment_config, sample_gen=SampleNodesWithoutReplacementGen(branch_factor=BF, depth=D)),
+    # dataclasses.replace(base_experiment_config, sample_gen=FixSequenceSampleGen(branch_factor=BF, depth=D)),
+    # dataclasses.replace(base_experiment_config, sample_gen=SampleLeavesWithReplacementGen(branch_factor=BF, depth=D)),
+    # dataclasses.replace(base_experiment_config, sample_gen=SampleNodesWithReplacementGen(branch_factor=BF, depth=D)),
+    # dataclasses.replace(base_experiment_config, sample_gen=SampleLeavesWithoutReplacementGen(branch_factor=BF, depth=D)),
+    # dataclasses.replace(base_experiment_config, sample_gen=SampleNodesWithoutReplacementGen(branch_factor=BF, depth=D)),
+    dataclasses.replace(base_experiment_config, sample_gen=XSampleGen(branch_factor=2, depth=10)),
 ]:
     if isinstance(experiment, str):
         # Skip commented out experiments
@@ -122,7 +123,7 @@ for experiment in [
             print("number_of_val_trees", NUM_VAL_TREES)
             print("number_of_nodes", sample_gen.number_of_nodes)
             print("number_of_input_permutations", sample_gen.number_of_input_permutations)
-            print("best_possible_loss", sample_gen.best_possible_loss(seq_length=sample_gen.number_of_nodes+1))
+            print("best_possible_loss", sample_gen.best_possible_loss)
             print(f"device: {device}")
             print(f"---")
             print(f"START TRAINING | {run_name}")
@@ -212,11 +213,11 @@ for experiment in [
                     break
 
             import pickle
-            with open(f'/cluster/home/mebr/Master3D/experiments/tree/out/{run_name}.pkl', 'wb') as f:
+            with open(f'/cluster/home/mebr/experiments/TransformerTreeGenerator/out/{run_name}.pkl', 'wb') as f:
                 pickle.dump({
                     'predicted_trees': pred_trees,
                     'total_samples': SAMPLES_PER_EPOCH * NUM_EPOCHS,
-                    'expected_final_loss': sample_gen.best_possible_loss(seq_length=sample_gen.number_of_nodes+1),
+                    'expected_final_loss': sample_gen.best_possible_loss,
                     'loss_history': loss_history,
                     'train_time_history': train_time_history,
                     'tree_acc_history': tree_acc_history,

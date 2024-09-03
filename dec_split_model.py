@@ -4,9 +4,9 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-from experiments.tree.dec_model import init_weights
-from experiments.tree.experiment_config import ModelConfig
-from experiments.tree.positional_encoding import GlobalSinusoidalPositionalEncoding
+from dec_model import init_weights
+from experiment_config import ModelConfig
+from positional_encoding import GlobalSinusoidalPositionalEncoding
 
 
 class DecoderSplit(nn.Module):
