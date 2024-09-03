@@ -64,4 +64,15 @@ And is crucial for complex tasks (b=2, d=8):
 
 Seems to make no big difference, [this](https://arxiv.org/pdf/1611.01462) suggests to do this, this suggestion do not do this:
 
-![Tie-embeddings.png](imgs%2FTie-embeddings.png)
+![Tie-embeddings.png](imgs/Tie-embeddings.png)
+
+
+### [dec_model.py](dec_model.py) vs. [dec_split_model.py](dec_split_model.py)
+
+#### General
+
+![Different-architecture-(bf=5).png](imgs/Different-architecture-(bf=5).png)
+
+#### Interleaving
+
+![Interleaving-two-x4_b2_d7-trees.png](imgs/Interleaving-two-x4_b2_d7-trees.png)
