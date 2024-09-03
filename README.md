@@ -2,24 +2,37 @@
 
 Some Transformer Experimentation generating a tree structure.
 
-## Basic Transformer Results
+## Different tasks
 
-### Different tasks
-
-We train model on permutations of a single tree and its ability to afterwards predict a correct permutation of the tree.
-First we analyse how the model performs on different tasks using a tree with branch factor 10 (b=10) and depth 2 (d=2):
+We train model on permutations of a single tree and its ability to afterward predict a correct permutation of the tree.
+First we analyse how the model performs on different tasks using a tree with branch factor 5 (b=5) and an increasing depth:
 
 * fix: no permutations in the values [0, 1, ...]
-* lwr: leaves values are samples (among all siblings) with replacement
-* lwor: leaves values are samples (among all siblings) without replacement (tree permutation, only shuffling leaves)
-* nwor: all node values are samples (among all siblings) without replacement (tree permutation, shuffling leaves and branches)
+* lwr: leaves values are sampled (among all siblings) with replacement
+* nwr: all node values are sampled (among all siblings) with replacement
+* lwor: leaves values are sampled (among all siblings) without replacement (tree permutation, only shuffling leaves)
+* nwor: all node values are sampled (among all siblings) without replacement (tree permutation, shuffling leaves and branches)
 
-The fix task can be solved by just memorizing the single tree. 
-The lwr task is only position-dependent and must learn to predict a uniform distribution over each leaf children.
-The lwor task is harder, as previous siblings must be remembered to avoid duplicates, however the group of siblings is always the same.
-The nwor task is the hardest, as previous siblings must be remembered and the group of siblings depends on the (shuffled) parent node.
+The fix task can be solved by just memorizing the single tree.
+The lwr task is just to learn the uniform distribution for each sibling over all fixed siblings (no conditions).
+The nwr task is also parent-dependent, as the group of siblings depends on the sampled parent node.
+The lwor task is not parent-dependent but previous-siblings-dependent, as the parent node is always fixed, but the previous siblings must be remembered.
+The nwor task is parent-dependent and previous-siblings-dependent, as the parent node is sampled and the previous siblings must be remembered. 
+
+| Task    | parent-dependent  | previous-siblings-dependent |  
+|---------|-------------------|-----------------------------|
+| nwr     | yes               | no                          |
+| lwor    | no                | yes                         |
+| nwor    | yes               | yes                         |
+
+The experiments show that the parent-dependency seem to add no challenge whereas the previous-siblings-dependency seems to be challenging.
+So predicting what is missing seems to be harder than learning a conditional rule about the parent node.
+It is interesting that longer sequences seem to be harder to learn, even impossible for certain sequence lengths (not shown), regardless of the task being equally hard.
+Additionally, "nwor" gets unstable for depth=3.
 
 ![Different-task-(bf=5).png](imgs/Different-task-(bf=5).png)
+
+## Transformer Hyperparameter results
 
 ### Global Positional Encoding
 

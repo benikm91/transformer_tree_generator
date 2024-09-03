@@ -71,20 +71,6 @@ def plot_value(runs, key: str, ylabel: str, log_scale=False, ax=None):
 
 plots = {}
 
-plots['Different tasks hard (b=5, d=3)'] = {
-    'fix': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__fix_b5_d3__64_64__{i}.pkl' for i in range(1)],
-    'slwr': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__slwr_b5_d3__64_64__{i}.pkl' for i in range(1)],
-    'snwr': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__snwr_b5_d3__64_64__{i}.pkl' for i in range(1)],
-    'slwor': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__slwor_b5_d3__64_64__{i}.pkl' for i in range(1)],
-    'snwor': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__snwor_b5_d3__64_64__{i}.pkl' for i in range(1)],
-}
-plots['Different tasks easy (b=3, d=3)'] = {
-    'fix': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__fix_b3_d3__64_64__{i}.pkl' for i in range(1)],
-    'slwr': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__slwr_b3_d3__64_64__{i}.pkl' for i in range(1)],
-    'snwr': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__snwr_b3_d3__64_64__{i}.pkl' for i in range(1)],
-    'slwor': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__slwor_b3_d3__64_64__{i}.pkl' for i in range(1)],
-    'snwor': [f'out/decoder_l3_h8_e512_wi1_peglobal_learn_te0_ap0.00_ep0.00__snwor_b3_d3__64_64__{i}.pkl' for i in range(1)],
-}
 plots['Interleaving two x4_b2_d7 trees'] = {
     'std inter': [({'color': 'red', 'linestyle': '-'}, f'out/decoder_l3_h8_e512__interleave_x4_b2_d7__64_64__{i}.pkl') for i in range(3)],
     'split inter': [({'color': 'blue', 'linestyle': '-'}, f'out/decoder-split_l3_h8_e512__interleave_x4_b2_d7__64_64__{i}.pkl') for i in range(3)],

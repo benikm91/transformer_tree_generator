@@ -103,17 +103,17 @@ def get_filename(task: str, depth: int, run_id: int) -> str:
 
 plots['Different task (bf=5)'] = {
     'fix': lambda depth: [get_filename('fix', depth, i) for i in range(3)],
-    'slwr': lambda depth: [get_filename('slwr', depth, i) for i in range(3)],
-    'snwr': lambda depth: [get_filename('snwr', depth, i) for i in range(3)],
-    'slwor': lambda depth: [get_filename('slwor', depth, i) for i in range(3)],
-    'snwor': lambda depth: [get_filename('snwor', depth, i) for i in range(3)],
+    'lwr': lambda depth: [get_filename('slwr', depth, i) for i in range(3)],
+    'nwr': lambda depth: [get_filename('snwr', depth, i) for i in range(3)],
+    'lwor': lambda depth: [get_filename('slwor', depth, i) for i in range(3)],
+    'nwor': lambda depth: [get_filename('snwor', depth, i) for i in range(3)],
 }
 expected_final_loss = {
     'fix': lambda depth: FixSequenceSampleGen(branch_factor=5, depth=depth).best_possible_loss,
-    'slwr': lambda depth: SampleLeavesWithReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
-    'snwr': lambda depth: SampleNodesWithReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
-    'slwor': lambda depth: SampleLeavesWithoutReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
-    'snwor': lambda depth: SampleNodesWithoutReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
+    'lwr': lambda depth: SampleLeavesWithReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
+    'nwr': lambda depth: SampleNodesWithReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
+    'lwor': lambda depth: SampleLeavesWithoutReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
+    'nwor': lambda depth: SampleNodesWithoutReplacementGen(branch_factor=5, depth=depth).best_possible_loss,
 }
 
 for plot_name, run_fs in plots.items():
